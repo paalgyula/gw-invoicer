@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="11" bottomMargin="11">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="384"/>
+	<style name="Default font" isDefault="true" fontName="Calibri" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Osszegzo" style="Default font" isBold="true"/>
+	<style name="Tetelek" fill="Solid" hAlign="Left" vAlign="Top" markup="none" fontName="Segoe UI" fontSize="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Kezjegy footer" style="Default font" hAlign="Center" vAlign="Top"/>
+	<style name="Felso Oldalszam" style="Default font" mode="Opaque" forecolor="#FFFFFF" backcolor="#0033FF" fill="Solid" hAlign="Right" isBold="true">
+		<box topPadding="1" leftPadding="0" rightPadding="8"/>
+	</style>
+	<style name="Summary title" style="Default font" hAlign="Left" vAlign="Middle" isBold="true">
+		<box leftPadding="3"/>
+	</style>
+	<style name="Summary cols" style="Default font" hAlign="Right" isBold="false">
+		<box leftPadding="0" rightPadding="15"/>
+	</style>
+	<style name="Fizetendo Nagy" style="Tetelek" fontSize="15" isBold="true" isUnderline="true"/>
+	<parameter name="VERSION" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<parameter name="INVOICER_IMAGE" class="java.io.InputStream"/>
+	<parameter name="INVOICER_COMPANY" class="java.lang.String"/>
+	<parameter name="INVOICER_ADDRESS" class="java.lang.String"/>
+	<parameter name="INVOICER_TAX" class="java.lang.String"/>
+	<parameter name="INVOICER_TEL" class="java.lang.String"/>
+	<parameter name="INVOICER_MAIL" class="java.lang.String"/>
+	<parameter name="INVOICER_WEB" class="java.lang.String"/>
+	<parameter name="CUSTOMER_NAME" class="java.lang.String"/>
+	<parameter name="CUSTOMER_ADDR" class="java.lang.String"/>
+	<parameter name="INV_SORSZ" class="java.lang.String"/>
+	<parameter name="INV_TELJ_IDO" class="java.util.Date"/>
+	<parameter name="INV_KELT" class="java.util.Date"/>
+	<parameter name="INV_FIZ_HAT" class="java.util.Date"/>
+	<parameter name="INV_FIZ_MOD" class="java.lang.String"/>
+	<parameter name="INV_PELDANY" class="java.lang.Integer"/>
+	<parameter name="SUMM_NETTO" class="java.lang.Double"/>
+	<parameter name="SUMM_AFA_KULCS" class="java.lang.Double"/>
+	<parameter name="SUMM_AFA_ERTEK" class="java.lang.Double"/>
+	<parameter name="SUMM_BRUTTO" class="java.lang.Double"/>
+	<queryString language="hql">
+		<![CDATA[]]>
+	</queryString>
+	<field name="MEGNEVEZES" class="java.lang.String"/>
+	<field name="AFA" class="java.lang.Double"/>
+	<field name="MENNYISEG" class="java.lang.Double"/>
+	<field name="EGYSEGAR" class="java.lang.Double"/>
+	<variable name="AFA_SUM" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{AFA}]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="123">
+			<textField>
+				<reportElement x="12" y="81" width="255" height="20"/>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{INVOICER_COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="12" y="101" width="255" height="14"/>
+				<textElement markup="html">
+					<font fontName="Calibri" size="9" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{INVOICER_ADDRESS} == null ? "" : "<b>Cím:</b> " + $P{INVOICER_ADDRESS} + "<br/>")
++ ($P{INVOICER_TAX} == null ? "" : "<b>Adószám:</b> " + $P{INVOICER_TAX} + "<br/>")
++ ($P{INVOICER_TEL} == null ? "" : "<b>Telefon:</b> " + $P{INVOICER_TEL} + "<br/>")
++ ($P{INVOICER_MAIL} == null ? "" : "<b>E-Mail:</b> <span style=\"color: #0000ff; text-decoration: underline;\">" + $P{INVOICER_MAIL} + "</span><br/>")
++ ($P{INVOICER_WEB} == null ? "" : "<b>Weboldal:</b> <span style=\"color: #0000ff; text-decoration: underline;\">" + $P{INVOICER_WEB} + "</span><br/>")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Felso Oldalszam" x="-5" y="0" width="44" height="16" forecolor="#FEFEFE" backcolor="#0033FF"/>
+				<textElement>
+					<font size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Integer.toString( $V{PAGE_NUMBER} ) + "."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="0" width="100" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Számla/Invoice]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="60" y="16" width="143" height="13"/>
+				<textElement markup="none">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{INV_PELDANY} == 1 ? "1.    Eredeti" : $P{INV_PELDANY} + ".    Másolat"]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true" isLazy="true" onErrorType="Blank">
+				<reportElement x="2" y="35" width="265" height="46"/>
+				<imageExpression><![CDATA[$P{INVOICER_IMAGE}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="327" y="81" width="255" height="20">
+					<printWhenExpression><![CDATA[$P{CUSTOMER_NAME} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CUSTOMER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="327" y="101" width="255" height="14">
+					<printWhenExpression><![CDATA[$P{CUSTOMER_ADDR} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Calibri" size="9" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>Cím:</b> " + $P{CUSTOMER_ADDR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="317" y="65" width="100" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vevő:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement style="Osszegzo" x="483" y="6" width="84" height="13"/>
+				<textElement/>
+				<text><![CDATA[Példány]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="300" y="6" width="87" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fiz.határidő]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="392" y="6" width="87" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fiz. módja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="105" y="6" width="98" height="13"/>
+				<textElement/>
+				<text><![CDATA[Telj. időpontja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="208" y="6" width="87" height="13"/>
+				<textElement/>
+				<text><![CDATA[Számla kelte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="13" y="6" width="87" height="13"/>
+				<textElement/>
+				<text><![CDATA[Sorszám]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="2" y="5" width="580" height="1"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="2" y="33" width="580" height="1"/>
+			</line>
+			<textField pattern="yyyy-MM-d" isBlankWhenNull="true">
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="105" y="19" width="98" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_TELJ_IDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="392" y="19" width="87" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_FIZ_MOD} == null ? "Készpénz" : $P{INV_FIZ_MOD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="483" y="19" width="84" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_PELDANY} == 1 ? "1. Eredeti" : $P{INV_PELDANY} + ". Másolat"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="13" y="19" width="87" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_SORSZ}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="208" y="19" width="87" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_KELT} == null ? Calendar.getInstance().getTime() : $P{INV_KELT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy.MM.dd">
+				<reportElement style="Default font" stretchType="RelativeToBandHeight" x="300" y="19" width="87" height="13"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$P{INV_FIZ_HAT} == null ? "-" : new SimpleDateFormat( "yyyy-MM-dd" ).format( $P{INV_FIZ_HAT} )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Osszegzo" x="434" y="59" width="74" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[ÁFA érték]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="162" y="59" width="52" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[ÁFA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="360" y="59" width="74" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Nettó érték]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="508" y="59" width="71" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Bruttó ár]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="214" y="59" width="67" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Mennyiség]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="281" y="59" width="79" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Egységár]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Osszegzo" x="5" y="59" width="157" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Megnevezés]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="41" width="100" height="15"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tételek:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="214" y="0" width="67" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{MENNYISEG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="5" y="0" width="157" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{MEGNEVEZES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 HUF" isBlankWhenNull="true">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="434" y="0" width="74" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{MENNYISEG} * $F{EGYSEGAR} * $F{AFA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 HUF" isBlankWhenNull="true">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="281" y="0" width="79" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{EGYSEGAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 %">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="162" y="0" width="52" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{AFA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 HUF">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="360" y="0" width="74" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{EGYSEGAR} * $F{MENNYISEG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 HUF">
+				<reportElement style="Tetelek" stretchType="RelativeToBandHeight" x="508" y="0" width="71" height="18"/>
+				<box topPadding="2" leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{EGYSEGAR} * $F{MENNYISEG} * (1+$F{AFA})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="48" width="320" height="37"/>
+				<textElement markup="html">
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A számla két példányban készült, minden oldala aláírással, pecséttel hitelesített.<br/>"
++ "GW-Systems számlázó és könyvelőrendszer "
++ $P{VERSION}
++ "<br/>&copy; 2007-2010 Paál Gyula - <span style=\"color: #0000ff; text-decoration: underline;\">www.gw-systems.com</span>"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Default font" x="463" y="72" width="80" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Oldal: "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Default font" x="543" y="72" width="40" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="388" y="49" width="180" height="1"/>
+			</line>
+			<staticText>
+				<reportElement style="Kezjegy footer" x="388" y="49" width="180" height="11"/>
+				<textElement/>
+				<text><![CDATA[Kibocsájtó kézjegye]]></text>
+			</staticText>
+			<image isUsingCache="true" isLazy="true">
+				<reportElement x="3" y="48" width="50" height="37"/>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="266" splitType="Stretch">
+			<rectangle>
+				<reportElement x="39" y="38" width="400" height="15" backcolor="#E2E2E2"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="39" y="22" width="400" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Summary title" x="39" y="23" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Áfa kulcs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="53" width="89" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Összesen]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="139" y="38" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{SUMM_NETTO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="39" y="37" width="400" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="339" y="38" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{SUMM_BRUTTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="139" y="53" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUMM_NETTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="239" y="53" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUMM_AFA_ERTEK}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 %">
+				<reportElement x="39" y="37" width="89" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{SUMM_AFA_KULCS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Summary title" x="139" y="23" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Nettó érték]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="339" y="53" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUMM_BRUTTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="Summary cols" x="239" y="38" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{SUMM_AFA_ERTEK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Default font" x="39" y="7" width="100" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Összesítő:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="67" width="400" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Summary title" x="339" y="22" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Bruttó érték]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Fizetendo Nagy" mode="Transparent" x="53" y="71" width="476" height="26"/>
+				<textElement markup="none">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fizetendő: " + new DecimalFormat( "#,##0" ).format( $P{SUMM_BRUTTO} ) + " HUF"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Summary title" x="239" y="22" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Áfa érték]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="229" width="320" height="37"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["A számla két példányban készült, minden oldala aláírással, pecséttel hitelesített.<br/>"
++ "GW-Systems számlázó és könyvelőrendszer "
++ $P{VERSION}
++ "<br/>&copy; 2007-2010 Paál Gyula - <span style=\"color: #0000ff; text-decoration: underline;\">www.gw-systems.com</span>"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="388" y="230" width="180" height="1"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement style="Default font" x="543" y="253" width="40" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Kezjegy footer" x="388" y="230" width="180" height="11"/>
+				<textElement/>
+				<text><![CDATA[Kibocsájtó kézjegye]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Default font" x="463" y="253" width="80" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Oldal: "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true" isLazy="true">
+				<reportElement x="3" y="229" width="50" height="37"/>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="139" y="124" width="300" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="139" y="124" width="300" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Kibocsájtó kézjegye]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="154" width="483" height="64"/>
+				<textElement markup="html">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<ul>
+<li>A számla kézhezvételéől számított 8 napon belül, kifogás hiányában e számlánkat elfogadottnak tekintjük.</li>
+<li>Késedelmes fizetés esetén a mindenkori jegybanki alapkamat kétszeresét számítjuk fel.</li>
+<li>Köszönjük, hogy igénybe vette szolgáltatásainkat, várjuk további megrendeléseit!</li>
+</ul>]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>
