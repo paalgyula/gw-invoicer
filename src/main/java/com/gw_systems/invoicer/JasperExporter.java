@@ -1,7 +1,5 @@
 package com.gw_systems.invoicer;
 
-import java.awt.Image;
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
 import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
 import com.gw_systems.invoicer.datasource.InvoiceItem;
@@ -35,7 +33,6 @@ public class JasperExporter {
 		
 		
 		try {
-			//JasperReport jasperReport = JasperCompileManager.compileReport( getResource( MainShell.class, "/reports/invoice.jrxml") );
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			
 			paramMap.put( "LOGO", getResource( JasperExporter.class, "/reports/poweredby.jpg" ) );
@@ -70,28 +67,26 @@ public class JasperExporter {
 				itemList.add( new InvoiceItem(0, 0, "Kilós kenyér", 0.25, 5, 150 ) );
 			
 			JRDataSource dataSource = new JRDataSourceImpl( itemList );			
-			//JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, paramMap, dataSource );
-			JasperPrint jasperPrint = JasperFillManager.fillReport( getResource( JasperExporter.class, "/reports/invoice.jasper"), paramMap, dataSource );
 			
+			JasperPrint jasperPrint;
+			/* Ha forditani akarjuk a reportot minden exportkor, akkor ezt erdemes atallitani... */
+			boolean recompile = false;
+			
+			if ( recompile ) {
+				JasperReport jasperReport = JasperCompileManager.compileReport( getResource( JasperExporter.class, "/reports/invoice.jrxml") );
+				jasperPrint = JasperFillManager.fillReport(jasperReport, paramMap, dataSource );
+			} else {
+				jasperPrint = JasperFillManager.fillReport( getResource( JasperExporter.class, "/reports/invoice.jasper"), paramMap, dataSource );
+			}
+				
 			JasperViewer jasperViewer = new JasperViewer(jasperPrint, true);
             jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
             jasperViewer.setTitle("Preview window");
             jasperViewer.setIconImage( null );
             jasperViewer.setVisible(true);
             
-			/*if( new File("C:\\").exists() ) {
-				String tempdir = System.getProperty( "java.io.tmpdir" );
-				JasperExportManager.exportReportToPdfFile(jasperPrint, tempdir + "\\export.pdf");
-				//JasperPrintManager.printReport(jasperPrint, false);
-				
-				//Runtime.getRuntime().exec( "cmd /C start " + tempdir + "export.pdf" );
-			} else {
-				JasperExportManager.exportReportToPdfFile(jasperPrint, "/home/goofy/Asztal/export.pdf");
-			}*/
-            
-            String home = System.getProperty("user.home");
-			JasperExportManager.exportReportToPdfFile( jasperPrint, home + "/invoice.pdf" );
-            
+            //String home = System.getProperty("user.home");
+			//JasperExportManager.exportReportToPdfFile( jasperPrint, home + "/invoice.pdf" );
             
 		} catch (Exception e) {
 			e.printStackTrace();
