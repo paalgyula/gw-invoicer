@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,6 +23,9 @@ public class Customer {
 	@Column(name="address", nullable=false)
 	String address;
 
+	@ManyToOne
+	Company company;
+	
 	public int getId() {
 		return id;
 	}

@@ -11,5 +11,6 @@
   <property name="hibernate.hbm2ddl.auto">update</property>
   <mapping package="com.gw_systems.invoicer.beans"/>
   <mapping class="com.gw_systems.invoicer.beans.Customer"/>
+  <mapping class="com.gw_systems.invoicer.beans.Company"/>
  </session-factory>
 </hibernate-configuration>
