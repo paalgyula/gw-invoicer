@@ -8,12 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
-
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 
 import com.gw_systems.invoicer.DatabaseConnector;
 import com.gw_systems.invoicer.ImagePanel;
@@ -27,8 +23,6 @@ public class SplashScreenDialog {
 	private JLabel lblStatusindicator;
 	private JProgressBar progressBar;
 
-	public static Session session;
-	public static Configuration config;
 	/**
 	 * Launch the application.
 	 */
@@ -104,5 +98,12 @@ public class SplashScreenDialog {
 	}
 	public synchronized JProgressBar getProgressBar() {
 		return progressBar;
+	}
+	
+	public synchronized void showLoginDialog() {
+		frmGwinvoicerHomeEdition.setVisible(false);
+		frmGwinvoicerHomeEdition.dispose();
+		
+		new CompanyChooserDialog().setVisible( true );
 	}
 }
