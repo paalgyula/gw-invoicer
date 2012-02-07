@@ -1,5 +1,6 @@
 package com.gw_systems.invoicer;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,6 +25,7 @@ public class ImagePanel extends JPanel {
 		setMaximumSize(size);
 		setSize(size);
 		setLayout(null);
+		setBackground(Color.WHITE);
 	}
 
 	public void paintComponent(Graphics g) {
