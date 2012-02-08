@@ -83,4 +83,9 @@ public class Company {
 	public int getId() {
 		return id;
 	}
+	
+	@Override
+	public String toString() {
+		return getCompanyName();
+	}
 }
