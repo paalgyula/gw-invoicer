@@ -5,15 +5,15 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
-import com.gw_systems.invoicer.frames.SplashScreenDialog;
+import com.gw_systems.invoicer.frames.SplashScreen;
 
 public class DatabaseConnector extends Thread {
-	private SplashScreenDialog mf;
+	private SplashScreen mf;
 	
 	public static Session session;
 	public static Configuration config;
 	
-	public DatabaseConnector(SplashScreenDialog mf) {
+	public DatabaseConnector(SplashScreen mf) {
 		this.mf = mf;
 	}
 	
@@ -45,8 +45,8 @@ public class DatabaseConnector extends Thread {
 			Thread.sleep( 2000 );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} finally {
-			this.mf.showLoginDialog();
 		}
+
+		this.mf.showLoginDialog();
 	}
 }

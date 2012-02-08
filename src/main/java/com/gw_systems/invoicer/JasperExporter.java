@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.UIManager;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,14 +21,7 @@ import com.gw_systems.invoicer.datasource.JRDataSourceImpl;
 
 public class JasperExporter {
 
-	/**
-	 * @param args
-	 */
-	public static void main( String[] args ) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-		}
+	public JasperExporter() {
 		
 		
 		try {
