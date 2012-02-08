@@ -1,25 +1,24 @@
 package com.gw_systems.invoicer.frames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import com.gw_systems.invoicer.DatabaseConnector;
 import com.gw_systems.invoicer.ImagePanel;
-import java.awt.Color;
-import java.awt.Toolkit;
-import java.io.File;
 
-public class SplashScreenDialog {
+public class SplashScreen {
 
-	private JDialog frmGwinvoicerHomeEdition;
+	private JFrame frmGwinvoicerHomeEdition;
 	private JLabel lblStatusindicator;
 	private JProgressBar progressBar;
 
@@ -27,21 +26,18 @@ public class SplashScreenDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					JFrame.setDefaultLookAndFeelDecorated( true );
 					
-					if ( String.valueOf( File.separatorChar ).equals( "/" ) )
-						UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
-					else
-						UIManager.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
+					UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceCeruleanLookAndFeel");
 					
-					
-					SplashScreenDialog window = new SplashScreenDialog();
+					SplashScreen window = new SplashScreen();
 					window.frmGwinvoicerHomeEdition.setVisible(true);
 					
-					new DatabaseConnector( window ).start();
+					Thread thr = new DatabaseConnector( window );
+					thr.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,7 +48,7 @@ public class SplashScreenDialog {
 	/**
 	 * Create the application.
 	 */
-	public SplashScreenDialog() {
+	public SplashScreen() {
 		initialize();
 	}
 
@@ -60,18 +56,21 @@ public class SplashScreenDialog {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmGwinvoicerHomeEdition = new JDialog();
+		frmGwinvoicerHomeEdition = new JFrame();
+		frmGwinvoicerHomeEdition.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		frmGwinvoicerHomeEdition.getContentPane().setBackground(Color.WHITE);
 		frmGwinvoicerHomeEdition.setResizable(false);
 		
 		BorderLayout borderLayout = (BorderLayout) frmGwinvoicerHomeEdition.getContentPane().getLayout();
-		borderLayout.setVgap(3);
-		borderLayout.setHgap(3);
-		frmGwinvoicerHomeEdition.setIconImage(Toolkit.getDefaultToolkit().getImage(SplashScreenDialog.class.getResource("/icons/invoice_bigicon.png")));
+		borderLayout.setVgap(5);
+		borderLayout.setHgap(5);
+		frmGwinvoicerHomeEdition.setIconImage(Toolkit.getDefaultToolkit().getImage(SplashScreen.class.getResource("/icons/invoice_bigicon.png")));
 		frmGwinvoicerHomeEdition.setBackground(Color.WHITE);
 		frmGwinvoicerHomeEdition.setTitle("GW-Invoicer Home Edition");
 		frmGwinvoicerHomeEdition.setBounds(100, 100, 462, 297);
-		frmGwinvoicerHomeEdition.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		frmGwinvoicerHomeEdition.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGwinvoicerHomeEdition.setUndecorated(true);
+		frmGwinvoicerHomeEdition.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		frmGwinvoicerHomeEdition.setBackground(Color.WHITE);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -89,7 +88,7 @@ public class SplashScreenDialog {
 		frmGwinvoicerHomeEdition.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(3, 3));
 		
-		lblStatusindicator = new JLabel("");
+		lblStatusindicator = new JLabel(" ");
 		panel.add(lblStatusindicator, BorderLayout.SOUTH);
 	}
 

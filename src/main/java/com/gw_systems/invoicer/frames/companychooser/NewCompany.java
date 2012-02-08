@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -16,10 +18,12 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JPasswordField;
 
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.gw_systems.invoicer.DatabaseConnector;
 import com.gw_systems.invoicer.beans.Company;
+import com.gw_systems.invoicer.frames.CompanyChooserDialog;
 
 import java.awt.Toolkit;
 
@@ -39,14 +43,16 @@ public class NewCompany extends JDialog {
 	private JTextField txtEmail;
 	private JTextField txtWebpage;
 
-	public NewCompany(JDialog parent) {
+	public NewCompany(final JFrame parent) {
 		super(parent);
 		setResizable(false);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setModal(true);
+		setUndecorated(true);
+		getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewCompany.class.getResource("/icons/folder_add.png")));
 		setTitle("Új cég felvitele");
-		setBounds(100, 100, 450, 413);
+		setBounds(100, 100, 450, 374);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -278,15 +284,17 @@ public class NewCompany extends JDialog {
 						company.setTaxNumber( txtTaxnr.getText() );
 						company.setAdminPassword( String.valueOf( pwdPass.getPassword() ) );
 						
-						if ( !DatabaseConnector.session.isOpen() ) {
-							DatabaseConnector.session = DatabaseConnector.config.buildSessionFactory().openSession();
-							Transaction tx = DatabaseConnector.session.beginTransaction();
+						Session session = DatabaseConnector.config.buildSessionFactory().openSession();
+						Transaction tx = session.beginTransaction();
 							
-							DatabaseConnector.session.save( company );
+						session.save( company );
 							
-							tx.commit();
-							DatabaseConnector.session.close();
-						}
+						tx.commit();
+						session.close();
+						
+						((CompanyChooserDialog)parent).refreshCompanyList();
+						setVisible(false);
+						dispose();
 					}
 				});
 				okButton.setIcon(new ImageIcon(NewCompany.class.getResource("/icons/add.png")));
