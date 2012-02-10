@@ -4,16 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.hibernate.Session;
@@ -33,10 +34,7 @@ import com.gw_systems.invoicer.frames.companychooser.NewCompany;
 import com.gw_systems.invoicer.frames.ribbon.CompanyChooserAppMenu;
 import static com.gw_systems.invoicer.frames.ribbon.RibbonTools.*;
 import javax.swing.JToolBar;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class CompanyChooserDialog extends JRibbonFrame {
@@ -44,9 +42,9 @@ public class CompanyChooserDialog extends JRibbonFrame {
 	private static final long serialVersionUID = -6669370700455899884L;
 	private JPanel contentPane;
 	private DefaultListModel listModel;
-	private final Action action = new SwingAction();
 
 	public CompanyChooserDialog() {
+		setDefaultCloseOperation(JRibbonFrame.DO_NOTHING_ON_CLOSE);
 		final CompanyChooserDialog parent = this;
 
 		setResizable(false);
@@ -54,7 +52,6 @@ public class CompanyChooserDialog extends JRibbonFrame {
 				CompanyChooserDialog.class
 						.getResource("/icons/invoice_bigicon.png")));
 		setTitle("Cég választás");
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 511, 435);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -127,10 +124,12 @@ public class CompanyChooserDialog extends JRibbonFrame {
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		// if(JOptionPane.showConfirmDialog(null, "Biztosan ki akar lépni?",
-		// "GW-Invoicer Számlázó - www.gw-systems.com",
-		// JOptionPane.OK_CANCEL_OPTION) == 0)
-		// System.exit( 0 );
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent eventArg) {
+				if(JOptionPane.showConfirmDialog(null, "Biztosan ki akar lépni?", "GW-Invoicer Számlázó - www.gw-systems.com", JOptionPane.YES_NO_OPTION) == 0)
+					System.exit( 0 );
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane);
@@ -166,13 +165,5 @@ public class CompanyChooserDialog extends JRibbonFrame {
 
 		tx.rollback();
 		session.close();
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
 	}
 }
