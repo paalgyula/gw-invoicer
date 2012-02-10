@@ -1,10 +1,13 @@
 package com.gw_systems.invoicer.beans;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -32,6 +35,9 @@ public class Company {
 	@Column(nullable=false)
 	String adminPassword;
 
+	@OneToMany
+	List<Customer> customers;
+	
 	public String getCompanyName() {
 		return companyName;
 	}
@@ -87,5 +93,13 @@ public class Company {
 	@Override
 	public String toString() {
 		return getCompanyName();
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 }

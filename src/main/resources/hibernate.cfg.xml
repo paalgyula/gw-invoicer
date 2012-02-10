@@ -12,5 +12,6 @@
   <mapping package="com.gw_systems.invoicer.beans"/>
   <mapping class="com.gw_systems.invoicer.beans.Customer"/>
   <mapping class="com.gw_systems.invoicer.beans.Company"/>
+  <mapping class="com.gw_systems.invoicer.beans.Permissions"/>
  </session-factory>
 </hibernate-configuration>
