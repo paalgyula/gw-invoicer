@@ -27,6 +27,8 @@ public class SplashScreen {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		StaticTools.loadFonts();
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {

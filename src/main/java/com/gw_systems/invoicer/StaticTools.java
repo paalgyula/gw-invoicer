@@ -24,7 +24,11 @@ public class StaticTools extends Thread {
 	public static Font sansItalicFont;
 	public static Font sansBoldItalicFont;
 	
-	static {
+	public StaticTools(SplashScreen mf) {
+		this.mf = mf;
+	}
+	
+	public static void loadFonts() {
 		try {
 			segoeUIFont = Font.createFont(Font.TRUETYPE_FONT, StaticTools.class.getResourceAsStream( "/fonts/segoeui.ttf" ) );
 			sansRegularFont = Font.createFont( Font.TRUETYPE_FONT, StaticTools.class.getResourceAsStream( "/LiberationSans-Regular.ttf" ) );
@@ -32,39 +36,39 @@ public class StaticTools extends Thread {
 			sansItalicFont = Font.createFont( Font.TRUETYPE_FONT, StaticTools.class.getResourceAsStream( "/LiberationSans-Italic.ttf" ) );
 			sansBoldItalicFont = Font.createFont( Font.TRUETYPE_FONT, StaticTools.class.getResourceAsStream( "/LiberationSans-BoldItalic.ttf" ) );
 			
-			UIManager.put("InternalFrame.titleFont", new Font( sansBoldFont.getFontName(), Font.PLAIN, 12 ) );
+			//UIManager.put("InternalFrame.titleFont", new Font( sansBoldFont.getFontName(), Font.PLAIN, 12 ) );
 			
-			UIManager.put("Button.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ToggleButton.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("RadioButton.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("CheckBox.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ColorChooser.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ComboBox.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Label.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("List.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("MenuBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("MenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("RadioButtonMenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("CheckBoxMenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Menu.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("PopupMenu.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("OptionPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Panel.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ProgressBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ScrollPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Viewport.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TabbedPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Table.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TableHeader.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TextField.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("PasswordField.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TextArea.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TextPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("EditorPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("TitledBorder.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ToolBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("ToolTip.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
-			UIManager.put("Tree.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 11 ));
+			UIManager.put("Button.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ToggleButton.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("RadioButton.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("CheckBox.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ColorChooser.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ComboBox.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Label.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("List.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("MenuBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("MenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("RadioButtonMenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("CheckBoxMenuItem.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Menu.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("PopupMenu.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("OptionPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Panel.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ProgressBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ScrollPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Viewport.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TabbedPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Table.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TableHeader.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TextField.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("PasswordField.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TextArea.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TextPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("EditorPane.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("TitledBorder.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ToolBar.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("ToolTip.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
+			UIManager.put("Tree.font", new Font( sansRegularFont.getFontName(), Font.PLAIN, 12 ));
 			
 		} catch (FontFormatException e) {
 			// TODO Auto-generated catch block
@@ -73,10 +77,6 @@ public class StaticTools extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public StaticTools(SplashScreen mf) {
-		this.mf = mf;
 	}
 	
 	@Override
@@ -110,6 +110,5 @@ public class StaticTools extends Thread {
 		}
 
 		this.mf.showLoginDialog();
-		
 	}
 }
