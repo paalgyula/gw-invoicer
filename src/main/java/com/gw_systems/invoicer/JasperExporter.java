@@ -72,6 +72,7 @@ public class JasperExporter {
 			}
 				
 			JasperViewer jasperViewer = new JasperViewer(jasperPrint, true);
+			jasperViewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
             jasperViewer.setTitle("Preview window");
             jasperViewer.setIconImage( null );

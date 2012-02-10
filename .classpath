@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/calibri-font.jar"/>
 	<classpathentry kind="lib" path="lib/segoeui-font.jar"/>
+	<classpathentry kind="lib" path="lib/sans-font.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

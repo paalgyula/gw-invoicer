@@ -13,8 +13,9 @@ import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.gw_systems.invoicer.DatabaseConnector;
+import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.ImagePanel;
+import java.awt.Font;
 
 public class SplashScreen {
 
@@ -31,12 +32,14 @@ public class SplashScreen {
 				try {
 					JFrame.setDefaultLookAndFeelDecorated( true );
 					
-					UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceCeruleanLookAndFeel");
+					//UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceCreamLookAndFeel");
+					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" );
+					//UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
 					
 					SplashScreen window = new SplashScreen();
 					window.frmGwinvoicerHomeEdition.setVisible(true);
 					
-					Thread thr = new DatabaseConnector( window );
+					Thread thr = new StaticTools( window );
 					thr.start();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,6 +60,8 @@ public class SplashScreen {
 	 */
 	private void initialize() {
 		frmGwinvoicerHomeEdition = new JFrame();
+		frmGwinvoicerHomeEdition.setFont(new Font("Liberation Sans", Font.PLAIN, 11));
+		frmGwinvoicerHomeEdition.setForeground(Color.WHITE);
 		frmGwinvoicerHomeEdition.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		frmGwinvoicerHomeEdition.getContentPane().setBackground(Color.WHITE);
 		frmGwinvoicerHomeEdition.setResizable(false);
@@ -68,8 +73,7 @@ public class SplashScreen {
 		frmGwinvoicerHomeEdition.setBackground(Color.WHITE);
 		frmGwinvoicerHomeEdition.setTitle("GW-Invoicer Home Edition");
 		frmGwinvoicerHomeEdition.setBounds(100, 100, 462, 297);
-		frmGwinvoicerHomeEdition.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmGwinvoicerHomeEdition.setUndecorated(true);
+		frmGwinvoicerHomeEdition.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmGwinvoicerHomeEdition.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		frmGwinvoicerHomeEdition.setBackground(Color.WHITE);
 		

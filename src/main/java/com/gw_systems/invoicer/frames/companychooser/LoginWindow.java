@@ -28,7 +28,6 @@ public class LoginWindow extends JDialog {
 	public LoginWindow() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Bejelentkezés");
-		setUndecorated(true);
 		getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/icons/invoice_bigicon.png")));

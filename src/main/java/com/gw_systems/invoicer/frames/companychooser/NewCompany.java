@@ -2,30 +2,31 @@ package com.gw_systems.invoicer.frames.companychooser;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import java.awt.Insets;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.gw_systems.invoicer.DatabaseConnector;
+import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.beans.Company;
 import com.gw_systems.invoicer.frames.CompanyChooserDialog;
-
-import java.awt.Toolkit;
 
 public class NewCompany extends JDialog {
 
@@ -42,17 +43,21 @@ public class NewCompany extends JDialog {
 	private JTextField txtFax;
 	private JTextField txtEmail;
 	private JTextField txtWebpage;
+	private final NewCompany parent = this;
+
+	public NewCompany getParentDialog() {
+		return parent;
+	}
 
 	public NewCompany(final JFrame parent) {
 		super(parent);
 		setResizable(false);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setModal(true);
-		setUndecorated(true);
 		getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewCompany.class.getResource("/icons/folder_add.png")));
 		setTitle("Új cég felvitele");
-		setBounds(100, 100, 450, 374);
+		setBounds(100, 100, 450, 432);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -284,14 +289,20 @@ public class NewCompany extends JDialog {
 						company.setTaxNumber( txtTaxnr.getText() );
 						company.setAdminPassword( String.valueOf( pwdPass.getPassword() ) );
 						
-						Session session = DatabaseConnector.config.buildSessionFactory().openSession();
+						Session session = StaticTools.config.buildSessionFactory().openSession();
 						Transaction tx = session.beginTransaction();
-							
-						session.save( company );
-							
-						tx.commit();
-						session.close();
 						
+						try {
+							session.save( company );
+							tx.commit();
+							
+							JOptionPane.showMessageDialog( getParentDialog(), "A Cég sikeresen felvéve az adatbázisba!" );
+						} catch (Exception e2) {
+							tx.rollback();
+						} finally {
+							session.close();
+						}
+							
 						((CompanyChooserDialog)parent).refreshCompanyList();
 						setVisible(false);
 						dispose();
