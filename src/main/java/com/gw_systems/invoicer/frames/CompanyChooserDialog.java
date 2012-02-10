@@ -42,6 +42,7 @@ public class CompanyChooserDialog extends JRibbonFrame {
 	private static final long serialVersionUID = -6669370700455899884L;
 	private JPanel contentPane;
 	private DefaultListModel listModel;
+	private JList companyList;
 
 	public CompanyChooserDialog() {
 		setDefaultCloseOperation(JRibbonFrame.DO_NOTHING_ON_CLOSE);
@@ -57,6 +58,8 @@ public class CompanyChooserDialog extends JRibbonFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPane);
 
+		StaticTools.centerFrame( this );
+		
 		JRibbonBand bandHome = new JRibbonBand("Cégműveletek", null);
 
 		JCommandButton btnSelectCompany = new JCommandButton(
@@ -71,7 +74,8 @@ public class CompanyChooserDialog extends JRibbonFrame {
 
 		btnSelectCompany.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new LoginWindow().setVisible(true);
+				if ( getCompanyList().getSelectedValue() != null )
+					new LoginWindow(parent).setVisible(true);
 			}
 		});
 
@@ -137,7 +141,7 @@ public class CompanyChooserDialog extends JRibbonFrame {
 		listModel = new DefaultListModel();
 		refreshCompanyList();
 
-		JList companyList = new JList(listModel);
+		companyList = new JList(listModel);
 		scrollPane.setViewportView(companyList);
 		
 		JToolBar toolBar = new JToolBar();
@@ -165,5 +169,8 @@ public class CompanyChooserDialog extends JRibbonFrame {
 
 		tx.rollback();
 		session.close();
+	}
+	public JList getCompanyList() {
+		return companyList;
 	}
 }
