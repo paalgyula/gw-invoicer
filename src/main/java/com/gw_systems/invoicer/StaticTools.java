@@ -1,9 +1,13 @@
 package com.gw_systems.invoicer;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Toolkit;
 import java.io.IOException;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,6 +27,26 @@ public class StaticTools extends Thread {
 	public static Font sansBoldFont;
 	public static Font sansItalicFont;
 	public static Font sansBoldItalicFont;
+	
+	public static void centerFrame(JFrame frame) {
+		Toolkit tk = Toolkit.getDefaultToolkit();
+	    Dimension screenSize = tk.getScreenSize();
+	    int screenHeight = screenSize.height;
+	    int screenWidth = screenSize.width;
+	    int windowHeight = frame.getHeight();
+	    int windowWidth = frame.getWidth();
+	    frame.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
+	}
+	
+	public static void centerDialog(JDialog frame) {
+		Toolkit tk = Toolkit.getDefaultToolkit();
+	    Dimension screenSize = tk.getScreenSize();
+	    int screenHeight = screenSize.height;
+	    int screenWidth = screenSize.width;
+	    int windowHeight = frame.getHeight();
+	    int windowWidth = frame.getWidth();
+	    frame.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
+	}
 	
 	public StaticTools(SplashScreen mf) {
 		this.mf = mf;

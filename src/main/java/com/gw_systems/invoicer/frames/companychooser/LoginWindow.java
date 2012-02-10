@@ -1,22 +1,23 @@
 package com.gw_systems.invoicer.frames.companychooser;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.Toolkit;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.gw_systems.invoicer.StaticTools;
 
 public class LoginWindow extends JDialog {
 
@@ -41,13 +42,7 @@ public class LoginWindow extends JDialog {
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		
-		Toolkit tk = Toolkit.getDefaultToolkit();
-	    Dimension screenSize = tk.getScreenSize();
-	    int screenHeight = screenSize.height;
-	    int screenWidth = screenSize.width;
-	    int windowHeight = getHeight();
-	    int windowWidth = getWidth();
-	    setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
+		StaticTools.centerDialog( this );
 		
 		contentPanel.setLayout(gbl_contentPanel);
 		{

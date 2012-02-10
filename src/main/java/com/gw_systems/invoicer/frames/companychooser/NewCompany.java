@@ -66,6 +66,9 @@ public class NewCompany extends JDialog {
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		
+		StaticTools.centerDialog( this );
+		
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblCgNeve = new JLabel("Cég neve:");

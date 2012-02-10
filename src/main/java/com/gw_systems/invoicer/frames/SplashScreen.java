@@ -3,8 +3,9 @@ package com.gw_systems.invoicer.frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,9 +14,8 @@ import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.ImagePanel;
-import java.awt.Font;
+import com.gw_systems.invoicer.StaticTools;
 
 public class SplashScreen {
 
@@ -79,13 +79,7 @@ public class SplashScreen {
 		frmGwinvoicerHomeEdition.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		frmGwinvoicerHomeEdition.setBackground(Color.WHITE);
 		
-		Toolkit tk = Toolkit.getDefaultToolkit();
-	    Dimension screenSize = tk.getScreenSize();
-	    int screenHeight = screenSize.height;
-	    int screenWidth = screenSize.width;
-	    int windowHeight = frmGwinvoicerHomeEdition.getHeight();
-	    int windowWidth = frmGwinvoicerHomeEdition.getWidth();
-	    frmGwinvoicerHomeEdition.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
+		StaticTools.centerFrame( frmGwinvoicerHomeEdition );
 		
 		progressBar = new JProgressBar();
 		frmGwinvoicerHomeEdition.getContentPane().add(progressBar, BorderLayout.SOUTH);
