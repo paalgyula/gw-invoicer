@@ -36,7 +36,7 @@ public class CompanyChooserDialog extends JRibbonFrame {
 	
 	private static final long serialVersionUID = -6669370700455899884L;
 	private JPanel contentPane;
-	private DefaultListModel<Company> listModel;
+	private DefaultListModel listModel;
 
 	public CompanyChooserDialog() {
 		setResizable(false);
@@ -99,10 +99,10 @@ public class CompanyChooserDialog extends JRibbonFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		listModel = new DefaultListModel<Company>();
+		listModel = new DefaultListModel();
 		refreshCompanyList();
 		
-		JList<Company> companyList = new JList<Company>(listModel);
+		JList companyList = new JList(listModel);
 		scrollPane.setViewportView(companyList);
 	}
 
