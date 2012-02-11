@@ -48,6 +48,10 @@ public class StaticTools extends Thread {
 	    frame.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
 	}
 	
+	public static Session createSession() {
+		return config.buildSessionFactory().openSession();
+	}
+	
 	public StaticTools(SplashScreen mf) {
 		this.mf = mf;
 	}

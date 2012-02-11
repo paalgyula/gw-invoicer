@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table
 public class Company {
 	@Id
 	@SequenceGenerator(allocationSize=1, initialValue=0, name="COMPANY_SEQ", sequenceName="COMPANY_SEQ")

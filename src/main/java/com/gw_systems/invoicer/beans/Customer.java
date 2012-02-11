@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table
 public class Customer {
 	@Id
 	@SequenceGenerator(allocationSize=1, initialValue=0, name="CUSTOMER_SEQ", sequenceName="CUSTOMER_SEQ")

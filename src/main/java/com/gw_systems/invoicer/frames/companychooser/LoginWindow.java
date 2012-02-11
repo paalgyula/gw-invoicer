@@ -11,13 +11,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.gw_systems.invoicer.StaticTools;
+import com.gw_systems.invoicer.beans.Company;
+import com.gw_systems.invoicer.beans.Customer;
+import com.gw_systems.invoicer.frames.CompanyChooserDialog;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoginWindow extends JDialog {
 
@@ -25,8 +35,10 @@ public class LoginWindow extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUsername;
 	private JPasswordField pwdPass;
+	final public CompanyChooserDialog parent;
 
-	public LoginWindow() {
+	public LoginWindow(CompanyChooserDialog wparent) {
+		this.parent = wparent;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Bejelentkezés");
 		getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
@@ -87,6 +99,34 @@ public class LoginWindow extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Bejelentkezés");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String wrongpass = "A megadott felhasználónév/jelszó páros érvénytelen!";
+						Company comp = (Company)parent.getCompanyList().getSelectedValue();
+						
+						if ( txtUsername.getText().toLowerCase().equals( "admin" ) ) {
+							if ( !comp.getAdminPassword().equals( String.valueOf( pwdPass.getPassword() ) ) ) {
+								JOptionPane.showMessageDialog( null, wrongpass, "Hiba", JOptionPane.ERROR_MESSAGE );
+								return;
+							}
+						} else {
+							Session session = StaticTools.createSession();
+							Transaction tx = session.beginTransaction();
+							
+							Customer customer = (Customer)session.createQuery( "select cust from Customer cust where cust.company.companyName = :COMP and cust.password = :PASSWORD and cust.name = :NAME" )
+									.setString( "COMP", comp.getCompanyName() )
+									.setString( "NAME", txtUsername.getText() )
+									.setString( "PASSWORD", String.valueOf( pwdPass.getPassword() ) ).uniqueResult();
+							if ( customer == null ) {
+								JOptionPane.showMessageDialog( null, wrongpass, "Hiba", JOptionPane.ERROR_MESSAGE );
+								return;
+							}
+							
+							tx.rollback();
+							session.close();
+						}
+					}
+				});
 				okButton.setIcon(new ImageIcon(LoginWindow.class.getResource("/icons/accept.png")));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -94,6 +134,12 @@ public class LoginWindow extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Mégsem");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						setVisible(false);
+						dispose();
+					}
+				});
 				cancelButton.setIcon(new ImageIcon(LoginWindow.class.getResource("/icons/delete.png")));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
