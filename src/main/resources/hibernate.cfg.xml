@@ -13,5 +13,7 @@
   <mapping class="com.gw_systems.invoicer.beans.Customer"/>
   <mapping class="com.gw_systems.invoicer.beans.Company"/>
   <mapping class="com.gw_systems.invoicer.beans.Permissions"/>
+  <mapping class="com.gw_systems.invoicer.beans.InvoiceItem"/>
+  <mapping class="com.gw_systems.invoicer.beans.InvoiceHead"/>
  </session-factory>
 </hibernate-configuration>
