@@ -1,15 +1,39 @@
-package com.gw_systems.invoicer.datasource;
+package com.gw_systems.invoicer.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class InvoiceItem {
+	
+	@Id
+	@SequenceGenerator(name="INVITEM_SEQ", allocationSize=1, sequenceName="INVITEM_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INVITEM_SEQ")
+	@Column
 	int itemId;
+	
+	@Column
 	int invoiceId;
+	
+	@Column
 	String title;
+	
+	@Column
 	double tax;
+	
+	@Column
 	double count;
+	
+	@Column
 	double costPerCount;
 	
-	public InvoiceItem( int itemId, int invoiceId, String title, double tax, double count, double costPerCount ) {
-		this.itemId = itemId;
+	public InvoiceItem( int invoiceId, String title, double tax, double count, double costPerCount ) {
 		this.invoiceId = invoiceId;
 		this.title = title;
 		this.tax = tax;

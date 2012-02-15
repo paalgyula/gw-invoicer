@@ -3,6 +3,8 @@ package com.gw_systems.invoicer.datasource;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gw_systems.invoicer.beans.InvoiceItem;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
@@ -18,13 +20,13 @@ public class JRDataSourceImpl implements JRDataSource {
 	
 	public Object getFieldValue(JRField field) throws JRException {
 		if ( field.getName().equals( "MEGNEVEZES" ) )
-			return item.title;
+			return item.getTitle();
 		else if ( field.getName().equals( "AFA" ) )
-			return item.tax;
+			return item.getTax();
 		else if ( field.getName().equals( "MENNYISEG" ) )
-			return item.count;
+			return item.getCount();
 		else if ( field.getName().equals( "EGYSEGAR" ) )
-			return item.costPerCount;
+			return item.getCostPerCount();
 		else
 			return "hello";
 	}

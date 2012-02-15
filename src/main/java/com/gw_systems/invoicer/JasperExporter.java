@@ -16,7 +16,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
-import com.gw_systems.invoicer.datasource.InvoiceItem;
+import com.gw_systems.invoicer.beans.InvoiceItem;
 import com.gw_systems.invoicer.datasource.JRDataSourceImpl;
 
 public class JasperExporter {
@@ -56,7 +56,7 @@ public class JasperExporter {
 			List<InvoiceItem> itemList = new ArrayList<InvoiceItem>();
 			
 			for ( int i=0;i<20;i++ )
-				itemList.add( new InvoiceItem(0, 0, "Kilós kenyér", 0.25, 5, 150 ) );
+				itemList.add( new InvoiceItem( 0, "Kilós kenyér", 0.25, 5, 150 ) );
 			
 			JRDataSource dataSource = new JRDataSourceImpl( itemList );			
 			

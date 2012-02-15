@@ -36,7 +36,7 @@ public class SplashScreen {
 					
 					//UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceCreamLookAndFeel");
 					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" );
-					//UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
+					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
 					
 					SplashScreen window = new SplashScreen();
 					window.frmGwinvoicerHomeEdition.setVisible(true);

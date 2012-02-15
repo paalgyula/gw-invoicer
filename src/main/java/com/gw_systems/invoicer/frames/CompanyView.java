@@ -22,17 +22,22 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
 import org.pushingpixels.flamingo.api.ribbon.resize.CoreRibbonResizePolicies;
 import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 
+import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.beans.Company;
+import com.gw_systems.invoicer.frames.components.InvoiceTableModel;
 import com.gw_systems.invoicer.frames.ribbon.RibbonTools;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JSplitPane;
+import javax.swing.JScrollPane;
+import javax.swing.JFrame;
 
 public class CompanyView extends JRibbonFrame {
 	
 	private static final long serialVersionUID = 1L;
-
-	private JTable table;
 	
 	private JLabel taskbarCompanylabel;
 	private JCommandButton helpButton;
+	private JTable table;
 	
 	public void createTaskbar() {
 		taskbarCompanylabel = new JLabel( "GW-Systems Kft." );
@@ -66,16 +71,24 @@ public class CompanyView extends JRibbonFrame {
 	}
 	
 	public CompanyView( final Company company ) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createTaskbar();
 		setTitle( "Cég számláinak kezelése" );
-		setSize( 293, 233 );
+		setSize( 677, 426 );
 		
+		StaticTools.centerFrame( this );
 		getRibbon().setApplicationMenu( new RibbonApplicationMenu() );
 		getRibbon().addTask( new RibbonTask( "Számla műveletek", createSzamlaRibbonBand() ) );
 		
+		JScrollPane scrollPane = new JScrollPane();
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
+		
 		table = new JTable();
 		
-		getContentPane().add( table, BorderLayout.CENTER );
+		table.setModel( new InvoiceTableModel() );
+		table.setFont(UIManager.getFont("Label.font"));
+		
+		scrollPane.setViewportView(table);
 		getContentPane().add( taskbarCompanylabel, BorderLayout.SOUTH );	
 	}
 	
@@ -83,7 +96,7 @@ public class CompanyView extends JRibbonFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
+					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" );
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

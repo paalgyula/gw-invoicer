@@ -36,6 +36,7 @@ import static com.gw_systems.invoicer.frames.ribbon.RibbonTools.*;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class CompanyChooserDialog extends JRibbonFrame {
 
@@ -142,6 +143,7 @@ public class CompanyChooserDialog extends JRibbonFrame {
 		refreshCompanyList();
 
 		companyList = new JList(listModel);
+		companyList.setFont(UIManager.getFont("Label.font"));
 		scrollPane.setViewportView(companyList);
 		
 		JToolBar toolBar = new JToolBar();
