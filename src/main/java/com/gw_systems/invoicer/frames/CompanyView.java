@@ -24,12 +24,15 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 
 import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.beans.Company;
-import com.gw_systems.invoicer.frames.components.InvoiceTableModel;
+import com.gw_systems.invoicer.frames.components.invoicetable.InvoiceTable;
+import com.gw_systems.invoicer.frames.components.invoicetable.InvoiceTableModel;
 import com.gw_systems.invoicer.frames.ribbon.RibbonTools;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.JFrame;
+import java.awt.Color;
+import javax.swing.ListSelectionModel;
 
 public class CompanyView extends JRibbonFrame {
 	
@@ -81,11 +84,13 @@ public class CompanyView extends JRibbonFrame {
 		getRibbon().addTask( new RibbonTask( "Számla műveletek", createSzamlaRibbonBand() ) );
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBackground(Color.WHITE);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable();
-		
+		table = new InvoiceTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel( new InvoiceTableModel() );
+		
 		table.setFont(UIManager.getFont("Label.font"));
 		
 		scrollPane.setViewportView(table);
@@ -97,16 +102,8 @@ public class CompanyView extends JRibbonFrame {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel( "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" );
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnsupportedLookAndFeelException e) {
+					//UIManager.setLookAndFeel( "com.sun.java.swing.plaf.gtk.GTKLookAndFeel" );
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
