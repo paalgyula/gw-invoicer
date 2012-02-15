@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,7 +17,7 @@ public class InvoiceItem {
 	@SequenceGenerator(name="INVITEM_SEQ", allocationSize=1, sequenceName="INVITEM_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INVITEM_SEQ")
 	@Column
-	int itemId;
+	int id;
 	
 	@Column
 	int invoiceId;
@@ -33,6 +34,9 @@ public class InvoiceItem {
 	@Column
 	double costPerCount;
 	
+	@ManyToOne
+	InvoiceHead head;
+	
 	public InvoiceItem( int invoiceId, String title, double tax, double count, double costPerCount ) {
 		this.invoiceId = invoiceId;
 		this.title = title;
@@ -44,12 +48,10 @@ public class InvoiceItem {
 	public InvoiceItem() {
 	}
 
-	public int getItemId() {
-		return itemId;
+	public int getId() {
+		return id;
 	}
-	public void setItemId( int itemId ) {
-		this.itemId = itemId;
-	}
+	
 	public int getInvoiceId() {
 		return invoiceId;
 	}

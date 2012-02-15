@@ -25,6 +25,7 @@ import com.gw_systems.invoicer.StaticTools;
 import com.gw_systems.invoicer.beans.Company;
 import com.gw_systems.invoicer.beans.Customer;
 import com.gw_systems.invoicer.frames.CompanyChooserDialog;
+import com.gw_systems.invoicer.frames.CompanyView;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,6 +38,10 @@ public class LoginWindow extends JDialog {
 	private JPasswordField pwdPass;
 	final public CompanyChooserDialog parent;
 
+	public CompanyChooserDialog getParentWindow() {
+		return parent;
+	}
+	
 	public LoginWindow(CompanyChooserDialog wparent) {
 		this.parent = wparent;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -109,6 +114,11 @@ public class LoginWindow extends JDialog {
 								JOptionPane.showMessageDialog( null, wrongpass, "Hiba", JOptionPane.ERROR_MESSAGE );
 								return;
 							}
+							
+							setVisible(false);
+							dispose();
+							getParentWindow().setVisible( false );
+							new CompanyView( comp ).setVisible( true );
 						} else {
 							Session session = StaticTools.createSession();
 							Transaction tx = session.beginTransaction();
@@ -124,6 +134,11 @@ public class LoginWindow extends JDialog {
 							
 							tx.rollback();
 							session.close();
+							
+							setVisible(false);
+							dispose();
+							getParentWindow().setVisible( false );
+							new CompanyView( comp ).setVisible( true );
 						}
 					}
 				});

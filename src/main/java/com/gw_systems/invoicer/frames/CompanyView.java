@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -41,12 +42,21 @@ public class CompanyView extends JRibbonFrame {
 	private JLabel taskbarCompanylabel;
 	private JCommandButton helpButton;
 	private JTable table;
+	private Company company;
+	
+	public Company getCompany() {
+		return company;
+	}
 	
 	public void createTaskbar() {
-		taskbarCompanylabel = new JLabel( "GW-Systems Kft." );
-		taskbarCompanylabel.setFont(new Font("Liberation Sans", Font.BOLD, 13));
+		taskbarCompanylabel = new JLabel( getCompany().getCompanyName() );
+		taskbarCompanylabel.setFont( new Font( StaticTools.sansBoldFont.getName(), Font.PLAIN, 12 ) );
 		helpButton = new JCommandButton( "", RibbonTools.getIcon16( "/icons/information.png" ) );
-		helpButton.setActionRichTooltip( new RichTooltip("Segítség","A gomb megnyomásával a \"Cég Számláinak Kezelése\" ablak részletes dokumentációja nyílik meg. A dokumentáció megtekintéséhez internet kapcsolat szükséges!") );
+		
+		RichTooltip helpTooltip = new RichTooltip("Segítség","A gomb megnyomásával a \"Cég Számláinak Kezelése\" ablak részletes dokumentációja nyílik meg. A dokumentáció megtekintéséhez internet kapcsolat szükséges!" );
+		helpTooltip.setFooterImage( new ImageIcon( getClass().getResource( "/icons/information.png" ) ).getImage() );
+		
+		helpButton.setActionRichTooltip( helpTooltip );
 		
 		getRibbon().addTaskbarComponent( helpButton );
 		getRibbon().addTaskbarComponent( new JSeparator( JSeparator.VERTICAL ) );
@@ -73,8 +83,9 @@ public class CompanyView extends JRibbonFrame {
 		return jrb;
 	}
 	
-	public CompanyView( final Company company ) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public CompanyView( Company company ) {
+		this.company = company;
+		
 		createTaskbar();
 		setTitle( "Cég számláinak kezelése" );
 		setSize( 677, 426 );

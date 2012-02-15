@@ -2,6 +2,7 @@ package com.gw_systems.invoicer.frames.components.invoicetable;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,14 +13,8 @@ import javax.swing.table.TableModel;
 public class InvoiceTable extends JTable {
 	private static final long serialVersionUID = 6350536165003335648L;
 
-	/**
-	 * <b>In this case it's method is doing nothing...</b>
-	 */
-	@Override
-	public void setModel(TableModel dataModel) {
-	}
-	
 	public InvoiceTable() {
+		setAutoCreateRowSorter( true );
 		super.setModel( new InvoiceTableModel() );
 	}
 	
@@ -63,7 +58,12 @@ public class InvoiceTable extends JTable {
 	private TableCellRenderer getImagePropertiesCellRenderer() {
 		return new TableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-				InvoiceImageProperties panel = new InvoiceImageProperties( true, true, true, true );
+				InvoiceImageProperties panel = new InvoiceImageProperties( 
+					new Random().nextBoolean(), 
+					new Random().nextBoolean(), 
+					new Random().nextBoolean(),
+					new Random().nextBoolean()
+				);
 				
 				if ( isSelected )
 					panel.setBackground( table.getSelectionBackground() );
