@@ -1,0 +1,1 @@
+Managed hungarian invoicer software witch can be generate reports, and manage items.
